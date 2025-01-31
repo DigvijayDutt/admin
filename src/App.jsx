@@ -66,7 +66,7 @@ function App() {
                 aria-haspopup="true"
                 onClick={handleMenu}
                 color="inherit"
-              >
+              > 
                 <AccountCircle />
               </M.IconButton>
               <M.Menu
