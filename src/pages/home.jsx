@@ -7,6 +7,8 @@ import * as React from 'react';
 import * as M from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import AccountCircle from '@mui/icons-material/AccountCircle';
+import InboxIcon from '@mui/icons-material/MoveToInbox';
+import MailIcon from '@mui/icons-material/Mail';
 import { DataGrid } from '@mui/x-data-grid';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { PieChart } from '@mui/x-charts/PieChart';
@@ -19,6 +21,11 @@ function Home() {
     };
     const handleClose = () => {
       setAnchorEl(null);
+    };
+    const [open, setOpen] = React.useState(false);
+
+    const toggleDrawer = (newOpen) => () => {
+      setOpen(newOpen);
     };
   
     const columns = [
@@ -54,12 +61,42 @@ function Home() {
     ];
   
     const paginationModel = { page: 0, pageSize: 5 };
+
+    const DrawerList=(
+        <M.Box sx={{width:200}} role="presentation" onClick={toggleDrawer(false)}>
+            <M.List>
+            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
+                <M.ListItem key={text} disablePadding>
+                    <M.ListItemButton>
+                    <M.ListItemIcon>
+                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                    </M.ListItemIcon>
+                    <M.ListItemText primary={text} />
+                    </M.ListItemButton>
+                </M.ListItem>
+            ))}
+            </M.List>
+            <M.Divider />
+            <M.List>
+                {['All mail', 'Trash', 'Spam'].map((text, index) => (
+                <M.ListItem key={text} disablePadding>
+                    <M.ListItemButton>
+                    <M.ListItemIcon>
+                        {index % 2 === 0 ? <InboxIcon /> : <MailIcon />}
+                    </M.ListItemIcon>
+                    <M.ListItemText primary={text} />
+                    </M.ListItemButton>
+                </M.ListItem>
+                ))}
+            </M.List>
+        </M.Box>
+    );
   return (
     <>
       <M.Box sx={{flexGrow: 1}}>
         <M.AppBar position='static'>
           <M.Toolbar>
-            <M.IconButton size="large" edge="start" color="inherit" aria-label='menu' sx={{mr:2}}><MenuIcon /></M.IconButton>
+            <M.IconButton size="large" edge="start" color="inherit" aria-label='menu' sx={{mr:2}} onClick={toggleDrawer(true)}><MenuIcon /></M.IconButton>
              <M.Typography variant='h6' component="div" sx={{flexGrow:1}}>ByondBrains</M.Typography>
              <div>
               <M.IconButton
@@ -94,6 +131,11 @@ function Home() {
           </M.Toolbar>
         </M.AppBar>
       </M.Box>
+        <div>
+            <M.Drawer open={open} onClose={toggleDrawer(false)}>
+                {DrawerList}
+            </M.Drawer>
+        </div>
     <M.Grid2 container spacing={2}>
       <LineChart
         xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
