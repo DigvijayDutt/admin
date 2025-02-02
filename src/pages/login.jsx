@@ -18,7 +18,7 @@ const Login = () => {
       
       if (response.status === 200) {
         // If login is successful, redirect to a blank page
-        navigate('/blank');  // Adjust the route if needed
+        navigate('/home');  // Adjust the route if needed
       }
     } catch (error) {
       // Handle error, display error message
