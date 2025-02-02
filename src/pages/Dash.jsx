@@ -14,7 +14,7 @@ import { LineChart } from '@mui/x-charts/LineChart';
 import { PieChart } from '@mui/x-charts/PieChart';
 import { useState } from 'react';
 
-function Home() {
+function Dash() {
     const [anchorEl, setAnchorEl] = useState(null);
     const handleMenu = (event) => {
       setAnchorEl(event.currentTarget);
@@ -175,4 +175,4 @@ function Home() {
   );
 }
 
-export default Home;
+export default Dash;
