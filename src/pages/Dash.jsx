@@ -12,10 +12,28 @@ import MailIcon from '@mui/icons-material/Mail';
 import { DataGrid } from '@mui/x-data-grid';
 import { LineChart } from '@mui/x-charts/LineChart';
 import { PieChart } from '@mui/x-charts/PieChart';
+import axios from 'axios';
 import { useState } from 'react';
 
 function Dash() {
     const [anchorEl, setAnchorEl] = useState(null);
+    const [time, setTime] = useState([]);
+    const [reg, setReg] = useState([]);
+    const [error, setError] = useState("");
+    const [pie ,setPie] = useState([{}]);
+    const [row, setRow] = useState([{}]);
+    try{
+      axios.post('http://localhost:5000/reg', { time, reg });
+      axios.post('http://localhost:5000/course', { pie });
+      axios.post('http://localhost:5000/batch', { row });
+    }
+    catch(error){
+      if (error.response) {
+        setError(error.response.data.error);
+      } else {
+        setError('Server error, please try again later.');
+      }
+    };
     const handleMenu = (event) => {
       setAnchorEl(event.currentTarget);
     };

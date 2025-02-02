@@ -68,9 +68,6 @@ const Login = () => {
           </button>
         </form>
         {error && <p className="login-error">{error}</p>} {/* Display error message */}
-        <p className="login-footer">
-          Don't have an account? <a href="#">Sign Up</a>
-        </p>
       </div>
     </div>
   );
