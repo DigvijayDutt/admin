@@ -7,7 +7,9 @@ import * as React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/login';
 import Dash from './pages/Dash';
+import UserManage from './pages/UserManage';
 import './App.css';
+import CourseManage from './pages/CourseManage';
 
 function App() {
   return(
@@ -15,6 +17,8 @@ function App() {
       <Routes>
         <Route path="/" element={<Login />} />
         <Route path="/dash" element={<Dash />} />
+        <Route path="/usermanage" element={<UserManage />} />
+        <Route path="/coursemanage" element={<CourseManage />} />
       </Routes>
     </Router>
   );
