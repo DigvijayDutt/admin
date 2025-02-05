@@ -13,19 +13,19 @@ const Login = () => {
     e.preventDefault();
 
     try {
-      // Send POST request to backend with email and password
-      const response = await axios.post('http://localhost:5000/login', { email, password });
+      // Send POST request to backend with email and password for admin login
+      const response = await axios.post('http://localhost:5000/admin/login', { email, password });
       
       if (response.status === 200) {
-        // If login is successful, redirect to a blank page
+        // If login is successful, redirect to the dashboard page
         navigate('/dash');  // Adjust the route if needed
       }
     } catch (error) {
       // Handle error, display error message
       if (error.response) {
-        setError(error.response.data.error);
+        setError(error.response.data.error);  // Set the error message from the response
       } else {
-        setError('Server error, please try again later.');
+        setError('Server error, please try again later.');  // Generic error message
       }
     }
   };

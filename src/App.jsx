@@ -7,8 +7,10 @@ import * as React from 'react';
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Login from './pages/login';
 import Dash from './pages/Dash';
-import Learning from './pages/learning'; // Import Learning Page
-import EditLearningArea from './pages/EditLearningArea'; // Corrected import name
+import Learning from './pages/learning'; 
+import CourseManage from './pages/CourseManage';
+import UserManage from './pages/UserManage';
+import EditLearningArea from './pages/EditLearningArea'; 
 import './App.css';
 
 function App() {
@@ -19,6 +21,8 @@ function App() {
         <Route path="/dash" element={<Dash />} />
         <Route path="/learning" element={<Learning />} /> 
         <Route path="/editlearning" element={<EditLearningArea />} />
+        <Route path="/usermanage" element={<UserManage />} />
+        <Route path="/coursemanage" element={<CourseManage />} />
       </Routes>
     </Router>
   );
