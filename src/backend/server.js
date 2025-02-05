@@ -232,59 +232,100 @@ app.delete('/learning-areas/:id', async (req, res) => {
   }
 });
 
-// Create a new course
-app.post('/courses', async (req, res) => {
-  const { title, description, price } = req.body;
 
-  if (!title || !description || !price) {
-    return res.status(400).json({ error: "Title, description, and price are required" });
+app.post('/courses', async (req, res) => {
+  const { title, description, price, learningAreaIds } = req.body;
+
+  if (!title || !description || !price || !Array.isArray(learningAreaIds) || learningAreaIds.length === 0) {
+    return res.status(400).json({ error: 'All fields are required, and at least one learning area should be selected' });
   }
 
+  const client = await pool.connect();
   try {
-    const result = await pool.query(
-      'INSERT INTO courses (title, description, price, created_at, updated_at) VALUES ($1, $2, $3, NOW(), NOW()) RETURNING courseid, title, description, price, created_at, updated_at',
-      [title, description, price]
-    );
-    res.status(201).json(result.rows[0]);
+    await client.query('BEGIN');
+
+    const insertCourseQuery = `
+      INSERT INTO courses (title, description, price, created_at, updated_at)
+      VALUES ($1, $2, $3, NOW(), NOW())
+      RETURNING courseid
+    `;
+    const courseResult = await client.query(insertCourseQuery, [title, description, price]);
+    
+    if (!courseResult.rows.length) {
+      throw new Error('Failed to insert course');
+    }
+    
+    const courseId = courseResult.rows[0].courseid;
+    
+    for (let learningAreaId of learningAreaIds) {
+      const insertLearningAreaQuery = `
+        INSERT INTO CourseLearningArea (CourseId, LearningId)
+        VALUES ($1, $2)
+      `;
+      await client.query(insertLearningAreaQuery, [courseId, learningAreaId]);
+    }
+
+    await client.query('COMMIT');
+    res.status(201).json({ message: 'Course added successfully', courseId });
   } catch (err) {
-    console.error("Error creating course:", err);
-    res.status(500).json({ error: "Internal Server Error" });
+    await client.query('ROLLBACK');
+    console.error('Error adding course:', err);
+    res.status(500).json({ error: `Error adding course: ${err.message}` });
+  } finally {
+    client.release();
   }
 });
+
+
+// Create a new course
 app.get('/courses', async (req, res) => {
   try {
-    const result = await pool.query('SELECT courseid, title, description, price FROM courses');
-    
-    // Format price with ₹ symbol
-    const formattedCourses = result.rows.map(course => ({
-      ...course,
-      price: `₹${course.price}` // Add rupee sign
-    }));
+    // Query to fetch courses with their associated learning areas
+    const result = await pool.query(`
+      SELECT c.courseid, c.title, c.description, c.price, 
+             COALESCE(json_agg(l.domainname) FILTER (WHERE l.domainname IS NOT NULL), '[]') AS learning_areas
+      FROM courses c
+      LEFT JOIN CourseLearningArea cla ON c.courseid = cla.CourseId
+      LEFT JOIN LearningArea l ON cla.LearningId = l.LearningId
+      GROUP BY c.courseid
+    `);
 
-    res.json(formattedCourses);
+    // Send the fetched courses as a JSON response
+    res.json(result.rows);
   } catch (err) {
     console.error("Error fetching courses:", err);
-    res.status(500).json({ error: "Internal Server Error" });
+    
+    // Respond with a more specific error message if possible
+    if (err.code) {
+      res.status(500).json({ error: `Database error: ${err.message}` });
+    } else {
+      res.status(500).json({ error: "Internal Server Error" });
+    }
   }
 });
 
-// Delete a course
+
 app.delete('/courses/:id', async (req, res) => {
   const { id } = req.params;
 
   try {
+    // First delete related learning areas (if any)
+    await pool.query('DELETE FROM courselearningarea WHERE courseid = $1', [id]);
+
+    // Now delete the course itself
     const result = await pool.query('DELETE FROM courses WHERE courseid = $1 RETURNING *', [id]);
 
     if (result.rows.length === 0) {
-      return res.status(404).json({ error: "Course not found" });
+      return res.status(404).send('Course not found');
     }
 
-    res.json({ message: "Course deleted successfully" });
+    res.status(200).send('Course deleted successfully');
   } catch (err) {
-    console.error("Error deleting course:", err);
-    res.status(500).json({ error: "Internal Server Error" });
+    console.error('Error deleting course:', err);  // More detailed error logging
+    res.status(500).send(`Error deleting course: ${err.message}`);
   }
 });
+
 // Update a course
 app.put('/courses/:id', async (req, res) => {
   const { id } = req.params;
@@ -306,6 +347,17 @@ app.put('/courses/:id', async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
+
+app.get('/api/learning-areas', async (req, res) => {
+  try {
+    const result = await pool.query('SELECT * FROM learningarea');
+    res.json(result.rows);
+  } catch (err) {
+    console.error("Error fetching learning areas:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
 
 
 const PORT = process.env.PORT || 5000;
