@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import SideBar from '../assets/SideBar';
 import "../styles/CourseManage.css";
 
 function CourseManage() {
@@ -92,7 +93,11 @@ function CourseManage() {
   };
 
   return (
+    <>
+    <div className='cunt'>
+    <SideBar />
     <div className="course-manage">
+
       {/* Navigation Bar */}
       <nav className="navbar">
         <div className="navbar-brand">Course Manager</div>
@@ -175,6 +180,8 @@ function CourseManage() {
         </ul>
       </div>
     </div>
+    </div>
+    </>
   );
 }
 

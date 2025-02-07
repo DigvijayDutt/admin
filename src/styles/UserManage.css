@@ -11,7 +11,16 @@ body {
   color: #333;
   padding: 20px;
 }
-
+.cunt{
+  display: flex;
+  flex-direction: row;
+}
+.user-management{
+  max-width: 2000px;
+  display: flex;
+  flex-direction: column;
+  margin: 0 auto;
+}
 /* Navbar */
 .navbar {
   background-color: #007bff;

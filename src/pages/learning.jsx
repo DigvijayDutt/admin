@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-
+import SideBar from "../assets/SideBar";
 const Learning = () => {
   const [learningAreas, setLearningAreas] = useState([]);
   const [newLearningArea, setNewLearningArea] = useState("");
@@ -97,6 +97,8 @@ const Learning = () => {
   };
 
   return (
+    <div className="cunt">
+      <SideBar />
     <div className="container">
       <h2 className="title">Learning Areas</h2>
 
@@ -172,6 +174,7 @@ const Learning = () => {
           </div>
         </div>
       )}
+    </div>
     </div>
   );
 };

@@ -1,4 +1,8 @@
 /* General Styles */
+.cunt{
+  display: flex;
+  flex-direction: row;
+}
 body {
     margin: 0;
     font-family: 'Roboto', sans-serif;
@@ -7,9 +11,12 @@ body {
   }
   
   .course-manage {
+    display: flex;
+    flex-direction: column;
     padding: 20px;
     max-width: 800px;
-    margin: 0 auto;
+    margin-left: auto;
+    margin-right: auto;
   }
   
   /* Navigation Bar */

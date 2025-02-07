@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import SideBar from "../assets/SideBar";
 import axios from "axios";
 import "../styles/learning.css"; // Import the same CSS
 
@@ -55,6 +56,8 @@ const EditLearningArea = () => {
   if (loading) return <p>Loading...</p>;
 
   return (
+    <div className="cunt">
+      <SideBar />
     <div className="container">
       <h1 className="title">Edit Learning Area</h1>
       {area && (
@@ -105,6 +108,7 @@ const EditLearningArea = () => {
           </div>
         </>
       )}
+    </div>
     </div>
   );
 };
