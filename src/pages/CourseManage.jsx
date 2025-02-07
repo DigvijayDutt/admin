@@ -155,7 +155,7 @@ function CourseManage() {
           </div>
         </div>
 
-        <button onClick={addCourse}>Add Course</button>
+        <button onClick={addCourse} style={{color:0o0}}>Add Course</button>
       </div>
 
       {/* Course List */}
