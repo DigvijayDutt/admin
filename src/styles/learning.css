@@ -38,7 +38,7 @@
 }
 
 .table th {
-    background-color: #ff8c00; /* Bright orange */
+    background-color: #333; /* Bright orange */
     color: white;
     font-weight: bold;
 }
@@ -63,12 +63,12 @@
 }
 
 .btn-update {
-    background-color: #1e90ff; /* Bright blue */
+    background-color: #3333; /* Bright blue */
     color: white;
 }
 
 .btn-save {
-    background-color: #32cd32; /* Bright green */
+    background-color: #333; /* Bright green */
     color: white;
 }
 
@@ -104,13 +104,13 @@
 }
 
 .add-input:focus {
-    border-color: #ff8c00; /* Bright orange focus */
+    border-color: #333; /* Bright orange focus */
     outline: none;
 }
 
 .btn-add {
     padding: 10px 15px;
-    background-color: #32cd32; /* Bright green */
+    background-color: #333; /* Bright green */
     color: white;
     border-radius: 5px;
     border: none;
@@ -127,7 +127,7 @@
 }
 
 .add-area .btn-add:hover {
-    background-color: #28a745; /* Slightly darker green */
+    background-color: #333; /* Slightly darker green */
 }
 
 .loading,
@@ -174,7 +174,7 @@
 }
 
 .modal-actions .btn-confirm {
-    background-color: #32cd32; /* Bright green */
+    background-color: #333; /* Bright green */
     color: white;
     padding: 8px 16px;
     font-size: 14px;
@@ -197,7 +197,7 @@
     position: fixed;
     top: 20px;
     right: 20px;
-    background-color: #32cd32; /* Green background for success */
+    background-color: #333; /* Green background for success */
     color: white;
     padding: 15px;
     border-radius: 5px;
