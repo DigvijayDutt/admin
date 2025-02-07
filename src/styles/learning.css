@@ -73,7 +73,7 @@
 }
 
 .btn-danger {
-    background-color: #ff4500; /* Bright red */
+    background-color: #95332c; /* Bright red */
     color: white;
 }
 
@@ -135,7 +135,7 @@
     text-align: center;
     font-size: 18px;
     font-weight: bold;
-    color: #ff4500; /* Bright red for error messages */
+    color: #95332c; /* Bright red for error messages */
 }
 
 /* Modal Overlay */
@@ -181,7 +181,7 @@
 }
 
 .modal-actions .btn-cancel {
-    background-color: #ff4500; /* Bright red */
+    background-color: #95332c; /* Bright red */
     color: white;
     padding: 8px 16px;
     font-size: 14px;
@@ -209,7 +209,7 @@
 }
 
 .toast.error {
-    background-color: #ff4500; /* Red background for errors */
+    background-color: #95332c; /* Red background for errors */
 }
 
 .toast.show {

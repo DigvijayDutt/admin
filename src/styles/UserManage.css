@@ -226,12 +226,12 @@ body {
 }
 
 .user-actions .btn-delete {
-  background-color: #dc3545;
+  background-color: #95332c;
   color: white;
 }
 
 .user-actions .btn-delete:hover {
-  background-color: #c82333;
+  background-color: #95332c;
 }
 
 /* Mobile Responsiveness */
