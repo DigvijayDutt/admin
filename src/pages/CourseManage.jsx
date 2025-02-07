@@ -99,17 +99,6 @@ function CourseManage() {
     <div className="course-manage">
 
       {/* Navigation Bar */}
-      <nav className="navbar">
-        <div className="navbar-brand">Course Manager</div>
-        <div className="search-bar">
-          <input
-            type="text"
-            placeholder="Search courses..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
-      </nav>
 
       {/* Header */}
       <header className="header">

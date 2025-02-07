@@ -79,14 +79,6 @@ const UserManage = () => {
       <SideBar />
     <div className="user-management">
       {/* Navigation Bar */}
-      <nav className="navbar">
-        <div className="navbar-brand">Admin Dashboard</div>
-        <ul className="navbar-nav">
-          <li><a href="/">Home</a></li>
-          <li><a href="/dash">Dashboard</a></li>
-          <li><a href="/users">Users</a></li>
-        </ul>
-      </nav>
 
       {/* Header */}
       <header className="header">
