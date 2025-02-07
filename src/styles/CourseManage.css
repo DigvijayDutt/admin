@@ -15,7 +15,7 @@ body {
     display: flex;
     flex-direction: column;
     padding: 20px;
-    max-width: 800px;
+    max-width: 100%;
     margin-left: auto;
     margin-right: auto;
   }
