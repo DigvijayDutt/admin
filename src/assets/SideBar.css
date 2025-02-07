@@ -13,7 +13,7 @@
     border-right: 1px solid #ddd;
 }
 
-@media screen and (max-width: 1200px){
+@media screen and (max-width: 1500px){
     .sidebar{
         display: none;
     }
