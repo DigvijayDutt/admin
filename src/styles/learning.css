@@ -5,6 +5,7 @@
 }
 .container {
     max-width: 100%;
+    width:1000px;
     margin: 30px auto;
     padding: 25px;
     background: #f4f4f9; /* Off-white background */
