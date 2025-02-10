@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SideBar from "../assets/SideBar";
+import NavBar from '../assets/Navbar'
 const Learning = () => {
   const [learningAreas, setLearningAreas] = useState([]);
   const [newLearningArea, setNewLearningArea] = useState("");
@@ -100,6 +101,7 @@ const Learning = () => {
     <div className="cunt">
       <SideBar />
     <div className="container">
+      <NavBar />
       <h2 className="title">Learning Areas</h2>
 
       {/* Add New Learning Area */}

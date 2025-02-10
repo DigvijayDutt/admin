@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "../styles/UserManage.css";
 import SideBar from '../assets/SideBar';
+import NavBar from '../assets/Navbar'
 
 const UserManage = () => {
   const [users, setUsers] = useState([]);
@@ -79,7 +80,7 @@ const UserManage = () => {
       <SideBar />
     <div className="user-management">
       {/* Navigation Bar */}
-
+      <NavBar />
       {/* Header */}
       <header className="header">
         <h1>User Management</h1>

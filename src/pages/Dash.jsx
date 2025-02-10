@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
+import NavBar from '../assets/Navbar';
 import axios from 'axios'; // Import Axios for API requests
 import '../styles/dash.css';
 
@@ -66,6 +67,7 @@ function Dash() {
             {/* Main Content */}
             <div className="main-content">
                 {/* Header */}
+                <NavBar />
                 <header className="header">
                     <div className="header-title">Admin Dashboard</div>
                     <div className="user-menu">
