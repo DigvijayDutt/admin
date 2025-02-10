@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import SideBar from '../assets/SideBar';
 import "../styles/CourseManage.css";
+import NavBar from '../assets/Navbar';
 
 function CourseManage() {
   const [courses, setCourses] = useState([]);
@@ -94,12 +95,12 @@ function CourseManage() {
 
   return (
     <>
-    <div className='cunt'>
+    <div className='cunt'>  
     <SideBar />
     <div className="course-manage">
 
       {/* Navigation Bar */}
-
+    <NavBar />
       {/* Header */}
       <header className="header">
         <h1>Welcome to Course Management</h1>
