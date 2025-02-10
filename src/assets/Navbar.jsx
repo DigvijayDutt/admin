@@ -9,7 +9,7 @@ function NavBar(){
                     <li className='li'><Link to="/profile">Profile</Link></li>
                 </ul>                
             </nav>
-            <hr />
+            <hr className='hr'/>
         </>
     );
 }
