@@ -11,6 +11,8 @@ import Learning from './pages/learning';
 import CourseManage from './pages/CourseManage';
 import UserManage from './pages/UserManage';
 import EditLearningArea from './pages/EditLearningArea'; 
+import Settings from './pages/Settings';
+import Profile from './pages/Profile';
 import './App.css';
 
 function App() {
@@ -23,6 +25,8 @@ function App() {
         <Route path="/editlearning" element={<EditLearningArea />} />
         <Route path="/usermanage" element={<UserManage />} />
         <Route path="/coursemanage" element={<CourseManage />} />
+        <Route path="/settings" element={<Settings />} />
+        <Route path="/profile" element={<Profile />} />
       </Routes>
     </Router>
   );
