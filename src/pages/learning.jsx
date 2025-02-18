@@ -18,14 +18,14 @@ const Learning = () => {
     setLoading(true);
     try {
       const response = await fetch(API_URL);
-      if (!response.ok) throw new Error("Failed to load data");
+      if (!response.ok) throw new Error(`Failed to load data: ${response.statusText}`);
       const data = await response.json();
       console.log("Fetched learning areas:", data); // Debugging log
       setLearningAreas(data);
       setError("");
     } catch (error) {
       console.error("Error fetching learning areas:", error);
-      setError("Failed to load data. Please try again.");
+      setError(`Failed to load data. ${error.message}`);
     } finally {
       setLoading(false);
     }
