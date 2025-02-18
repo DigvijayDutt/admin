@@ -160,7 +160,7 @@ function CourseManage() {
                     <span className="course-title">{course.title}</span>
                     <p className="course-description">{course.description}</p>
                     <p className="course-price">${course.price}</p>
-                    <p className="course-learning-area">Learning Areas: {course.learning_areas.join(", ") || "N/A"}</p>
+                    <p className="course-learning-area">Learning Areas: {course.learning_areas.join(", ") || "N/A"}</p> 
                   </div>
                   <button className="delete-btn" onClick={() => deleteCourse(course.courseId)}>Delete</button> {/* course.courseId */}
                 </div>
