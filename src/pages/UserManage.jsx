@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "../styles/UserManage.css";
 import SideBar from '../assets/SideBar';
-import NavBar from '../assets/Navbar'
+import NavBar from '../assets/NavBar'
 
 const UserManage = () => {
   const [users, setUsers] = useState([]);
@@ -146,6 +146,16 @@ const UserManage = () => {
 
         <div className="user-list">
           <h2>User List</h2>
+          <table>
+            <thead>
+
+            </thead>
+            <tbody>
+              {users.map((user)=>(
+                <tr></tr>
+              ))}
+            </tbody>
+          </table>
           <ul>
             {users.map((user) => (
               <li key={user.userid}>

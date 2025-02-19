@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SideBar from "../assets/SideBar";
-import NavBar from '../assets/Navbar'
+import NavBar from '../assets/NavBar'
 const Learning = () => {
   const [learningAreas, setLearningAreas] = useState([]);
   const [newLearningArea, setNewLearningArea] = useState("");

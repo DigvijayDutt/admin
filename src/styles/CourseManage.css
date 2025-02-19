@@ -4,8 +4,12 @@
   display: flex;
   flex-direction: row;
 }
+label{
+  margin-right: 5px;
+}
 input[type=checkbox]{
   padding: 10px;
+  margin: 2px 2px;
 }
 body {
     margin: 0;

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { useParams, useNavigate } from "react-router-dom";
 import SideBar from "../assets/SideBar";
-import NavBar from '../assets/Navbar'
+import NavBar from '../assets/NavBar'
 import axios from "axios";
 import "../styles/learning.css"; // Import the same CSS
 
