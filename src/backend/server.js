@@ -5,6 +5,8 @@ const mysql = require('mysql2/promise');
 const bcrypt = require('bcrypt');
 require('dotenv').config();
 
+
+
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
@@ -241,127 +243,127 @@ app.delete('/learning-areas/:id', async (req, res) => {
   }
 });
 
-
-// Courses Routes
-app.post('/courses', async (req, res) => {
-  const { title, description, price, learningAreaIds } = req.body;
-  if (!title || !description || !price || !learningAreaIds?.length) {
-    return res.status(400).json({ error: 'All fields are required with at least one learning area' });
-  }
-
-  const conn = await pool.getConnection();
-  try {
-    await conn.beginTransaction();
-
-    // Insert course
-    const [courseResult] = await conn.query(
-      'INSERT INTO courses (title, description, price, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())',
-      [title, description, price]
-    );
-    
-    // Insert learning areas
-    for (const learningId of learningAreaIds) {
-      await conn.query(
-        'INSERT INTO CourseLearningArea (CourseId, LearningId) VALUES (?, ?)',
-        [courseResult.insertId, learningId]
-      );
-    }
-
-    await conn.commit();
-    res.status(201).json({ message: 'Course added successfully', courseId: courseResult.insertId });
-  } catch (err) {
-    await conn.rollback();
-    console.error('Error adding course:', err);
-    res.status(500).json({ error: `Error adding course: ${err.message}` });
-  } finally {
-    conn.release();
-  }
-});
-
-// Get all courses with learning areas
+// Update the courses GET endpoint to include learning areas
 app.get('/courses', async (req, res) => {
   try {
-    const [rows] = await pool.query(`
-      SELECT 
-        c.courseid,
-        c.title,
-        c.description,
-        c.price,
-        COALESCE(JSON_ARRAYAGG(l.domainname), '[]') AS learning_areas
+    const [courses] = await pool.query(`
+      SELECT c.*, 
+             GROUP_CONCAT(la.learningid) as learning_area_ids,
+             GROUP_CONCAT(la.domainname) as learning_area_names
       FROM course c
-      LEFT JOIN courselearningarea cla ON c.courseid = cla.CourseId
-      LEFT JOIN learningArea l ON cla.LearningId = l.learningid
+      LEFT JOIN courselearningarea cla ON c.courseid = cla.courseid
+      LEFT JOIN learningArea la ON cla.learningid = la.learningid
       GROUP BY c.courseid
     `);
 
-    res.json(rows);
+    // Format the response to include learning areas as an array
+    const formattedCourses = courses.map(course => ({
+      ...course,
+      learning_areas: course.learning_area_ids 
+        ? course.learning_area_ids.split(',').map((id, index) => ({
+            learningid: parseInt(id),
+            domainname: course.learning_area_names.split(',')[index]
+          }))
+        : []
+    }));
+
+    res.json(formattedCourses);
   } catch (err) {
     console.error("Error fetching courses:", err);
     res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
-// Delete a course
-app.delete('/courses/:id', async (req, res) => {
-  const { id } = req.params;
-  const conn = await pool.getConnection();
-  
+// Update the course creation endpoint to handle learning areas
+app.post('/courses', async (req, res) => {
+  const { title, description, price, learningAreaIds } = req.body;
+  if (!title || !price) {
+    return res.status(400).json({ error: "Title and price are required" });
+  }
+
+  const connection = await pool.getConnection();
   try {
-    await conn.beginTransaction();
-    await conn.query('DELETE FROM courselearningarea WHERE CourseId = ?', [id]);
-    const [result] = await conn.query('DELETE FROM course WHERE courseid = ?', [id]);
-    
-    if (result.affectedRows === 0) {
-      await conn.rollback();
-      return res.status(404).send('Course not found');
+    await connection.beginTransaction();
+
+    // Insert the course
+    const [courseResult] = await connection.query(
+      'INSERT INTO course (title, description, price, created_at, updated_at) VALUES (?, ?, ?, NOW(), NOW())',
+      [title, description, price]
+    );
+
+    const courseId = courseResult.insertId;
+
+    // Insert learning area associations
+    if (learningAreaIds && learningAreaIds.length > 0) {
+      const values = learningAreaIds.map(learningId => [courseId, learningId]);
+      await connection.query(
+        'INSERT INTO courselearningarea (courseid, learningid) VALUES ?',
+        [values]
+      );
     }
 
-    await conn.commit();
-    res.status(200).send('Course deleted successfully');
+    // Fetch the complete course data with learning areas
+    const [newCourse] = await connection.query(`
+      SELECT c.*, 
+             GROUP_CONCAT(la.learningid) as learning_area_ids,
+             GROUP_CONCAT(la.domainname) as learning_area_names
+      FROM course c
+      LEFT JOIN courselearningarea cla ON c.courseid = cla.courseid
+      LEFT JOIN learningArea la ON cla.learningid = la.learningid
+      WHERE c.courseid = ?
+      GROUP BY c.courseid
+    `, [courseId]);
+
+    await connection.commit();
+
+    // Format the response
+    const formattedCourse = {
+      ...newCourse[0],
+      learning_areas: newCourse[0].learning_area_ids 
+        ? newCourse[0].learning_area_ids.split(',').map((id, index) => ({
+            learningid: parseInt(id),
+            domainname: newCourse[0].learning_area_names.split(',')[index]
+          }))
+        : []
+    };
+
+    res.status(201).json(formattedCourse);
   } catch (err) {
-    await conn.rollback();
-    console.error('Error deleting course:', err);
-    res.status(500).send(`Error deleting course: ${err.message}`);
+    await connection.rollback();
+    console.error("Error adding course:", err);
+    res.status(500).json({ error: "Internal Server Error" });
   } finally {
-    conn.release();
+    connection.release();
   }
 });
 
-// Update a course
-app.put('/courses/:id', async (req, res) => {
+// Update the course deletion endpoint to handle learning area associations
+app.delete('/courses/:id', async (req, res) => {
   const { id } = req.params;
-  const { title, description, price } = req.body;
+  const connection = await pool.getConnection();
 
   try {
-    const [result] = await pool.query(
-      'UPDATE course SET title = ?, description = ?, price = ?, updated_at = NOW() WHERE courseid = ?',
-      [title, description, price, id]
-    );
+    await connection.beginTransaction();
+
+    // Delete learning area associations first
+    await connection.query('DELETE FROM courselearningarea WHERE courseid = ?', [id]);
+    
+    // Then delete the course
+    const [result] = await connection.query('DELETE FROM course WHERE courseid = ?', [id]);
 
     if (result.affectedRows === 0) {
+      await connection.rollback();
       return res.status(404).json({ error: "Course not found" });
     }
 
-    const [updatedCourse] = await pool.query(
-      'SELECT courseid, title, description, price, updated_at FROM courses WHERE courseid = ?',
-      [id]
-    );
-
-    res.json(updatedCourse[0]);
+    await connection.commit();
+    res.json({ message: "Course deleted successfully" });
   } catch (err) {
-    console.error("Error updating course:", err);
+    await connection.rollback();
+    console.error("Error deleting course:", err);
     res.status(500).json({ error: "Internal Server Error" });
-  }
-});
-
-// Get learning areas for course creation
-app.get('/api/learning-areas', async (req, res) => {
-  try {
-    const [rows] = await pool.query('SELECT * FROM learningArea');
-    res.json(rows);
-  } catch (err) {
-    console.error("Error fetching learning areas:", err);
-    res.status(500).json({ error: "Internal Server Error" });
+  } finally {
+    connection.release();
   }
 });
 
