@@ -136,6 +136,7 @@ function CourseManage() {
         </header>
 
         <div className="search-bar">
+          <label>Search: </label>
           <input
             type="text"
             placeholder="Search courses..."
@@ -143,8 +144,9 @@ function CourseManage() {
             onChange={(e) => setSearchQuery(e.target.value)}
           />
         </div>
-
+<hr className="line"></hr>
         <div className="add-course-form">
+          <label>Add Course: </label>
           <input
             type="text"
             placeholder="Enter course name"
@@ -189,34 +191,28 @@ function CourseManage() {
 
         <div className="course-list">
           <h2>Existing Courses</h2>
-          <ul>
-            {filteredCourses.length === 0 ? (
-              <p>No courses available</p>
-            ) : (
-              filteredCourses.map((course) => (
-                <li key={course.courseId || course.courseid}>
-                  <div className="course-header">
-                    <div>
-                      <span className="course-title">{course.title}</span>
-                      <p className="course-description">{course.description}</p>
-                      <p className="course-price">${course.price}</p>
-                      <p className="course-learning-area">
-                        Learning Areas: {Array.isArray(course.learning_areas) && course.learning_areas.length > 0
+          <table>
+            <thead>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Price</th>
+              <th>Learning-Area</th>
+              <th id="taction">Actions</th>
+            </thead>
+            {filteredCourses.length ===0 ? (<p>No courses available</p>) : (
+              filteredCourses.map((course)=>(
+                <tr key={course.courseId || course.courseid}>
+                  <td>{course.title}</td>
+                  <td>{course.description}</td>
+                  <td>{course.price}</td>
+                  <td>{Array.isArray(course.learning_areas) && course.learning_areas.length > 0
                           ? course.learning_areas.map(area => area.domainname || area.name).join(", ")
-                          : "N/A"}
-                      </p>
-                    </div>
-                    <button
-                      className="delete-btn"
-                      onClick={() => deleteCourse(course.courseId || course.courseid)}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                </li>
+                          : "N/A"}</td>
+                  <td id="tbutton"><button className="delete-btn" onClick={() => deleteCourse(course.courseId || course.courseid)}>Delete</button></td>
+                </tr>
               ))
             )}
-          </ul>
+          </table>
         </div>
       </div>
     </div>

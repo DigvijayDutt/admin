@@ -148,34 +148,31 @@ const UserManage = () => {
           <h2>User List</h2>
           <table>
             <thead>
-
+              <th>Name</th>
+              <th>Email</th>
+              <th>Phone</th>
+              <th>Role</th>
+              <th>Actions</th>
             </thead>
             <tbody>
               {users.map((user)=>(
-                <tr></tr>
+                <tr>
+                  <td>{user.name}</td>
+                  <td>{user.email}</td>
+                  <td>{user.phone}</td>
+                  <td>{user.role}</td>
+                  <td>
+                    <button onClick={() => handleEdit(user)} className="btn-edit">
+                      Edit
+                    </button>
+                    <button onClick={() => handleDelete(user.userid)} className="btn-delete">
+                      Delete
+                    </button>
+                  </td>
+                </tr>
               ))}
             </tbody>
           </table>
-          <ul>
-            {users.map((user) => (
-              <li key={user.userid}>
-                <div className="user-info">
-                  <span><strong>Name:</strong> {user.name}</span>
-                  <span><strong>Email:</strong> {user.email}</span>
-                  <span><strong>Mobile:</strong> {user.phone}</span>
-                  <span><strong>Role:</strong> {user.role}</span>
-                </div>
-                <div className="user-actions">
-                  <button onClick={() => handleEdit(user)} className="btn-edit">
-                    Edit
-                  </button>
-                  <button onClick={() => handleDelete(user.userid)} className="btn-delete">
-                    Delete
-                  </button>
-                </div>
-              </li>
-            ))}
-          </ul>
         </div>
       </div>
     </div>
