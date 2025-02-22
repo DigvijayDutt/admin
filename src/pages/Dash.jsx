@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import NavBar from '../assets/NavBar';
 import axios from 'axios'; // Import Axios for API requests
 import '../styles/dash.css';
+import SideBar from '../assets/SideBar';
 
 function Dash() {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -54,15 +55,7 @@ function Dash() {
     return (
         <div className="dashboard">
             {/* Sidebar Navigation */}
-            <nav className="sidebar">
-                <h2>Admin Menu</h2>
-                <ul>
-                    <li><Link to="/coursemanage">Courses</Link></li>
-                    <li><Link to="/learning">Domains</Link></li>
-                    <li><Link to="/usermanage">Users</Link></li>
-                    <li><Link to="/reports">Reports</Link></li>
-                </ul>
-            </nav>
+            <SideBar />
 
             {/* Main Content */}
             <div className="main-content">
