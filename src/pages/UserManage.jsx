@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "../styles/UserManage.css";
 import SideBar from '../assets/SideBar';
-import NavBar from '../assets/NavBar'
+import NavBar from '../assets/NavBar';
+
 
 const UserManage = () => {
   const [users, setUsers] = useState([]);

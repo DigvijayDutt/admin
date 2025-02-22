@@ -1,10 +1,11 @@
 import React from "react";
 import { Link } from 'react-router-dom';
 import "./Sidebar.css";
+import * as i from "@phosphor-icons/react";
 function SideBar() {
     return(
         <div className="sidebar">
-            <h2><Link to="/dash">Admin Menu</Link></h2>
+            <h2><Link to="/dash"><i.House size={32} /></Link></h2>
             <ul>
                 <li><Link to="/coursemanage">Courses</Link></li>
                 <li><Link to="/learning">Domains</Link></li>
