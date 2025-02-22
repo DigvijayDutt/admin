@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import NavBar from '../assets/Navbar';
+import NavBar from '../assets/NavBar';
 import axios from 'axios'; // Import Axios for API requests
 import '../styles/dash.css';
 import SideBar from '../assets/SideBar';
