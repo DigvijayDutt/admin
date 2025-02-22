@@ -11,18 +11,11 @@ body {
   color: #333;
   padding: 20px;
 }
-.cunt{
-  display: flex;
-  flex-direction: row;
-  max-width: 100%;
-  margin:none;
-  padding: 0;
-}
 .user-management{
   max-width: 100%;
   display: flex;
   flex-direction: column;
-  margin:0 auto;
+  margin-left:200px;
 }
 /* Navbar */
 .navbar {
@@ -161,12 +154,12 @@ body {
 /* User List */
 .user-list {
   background-color: white;
+  margin: 0 auto;
   margin-top: 40px;
   padding: 30px;
   border-radius: 8px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  margin: 30px auto;
+  width: 1000px;
 }
 
 .user-list h2 {

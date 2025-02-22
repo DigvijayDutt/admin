@@ -56,7 +56,6 @@ function Dash() {
         <div className="dashboard">
             {/* Sidebar Navigation */}
             <SideBar />
-
             {/* Main Content */}
             <div className="main-content">
                 {/* Header */}

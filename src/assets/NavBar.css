@@ -1,6 +1,7 @@
 .NavBar{
     display: flex;
     margin-top: 0.325%;
+    max-width: 100%;
 }
 .li{
     list-style-type: none;

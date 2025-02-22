@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import SideBar from "../assets/SideBar";
 import NavBar from '../assets/NavBar'
 import {Trash, PencilSimpleLine} from "@phosphor-icons/react";
+import '../styles/learning.css';
 const Learning = () => {
   const [learningAreas, setLearningAreas] = useState([]);
   const [newLearningArea, setNewLearningArea] = useState("");
@@ -99,7 +100,7 @@ const Learning = () => {
   };
 
   return (
-    <div className="cunt">
+    <>
       <SideBar />
     <div className="container">
       <NavBar />
@@ -178,7 +179,7 @@ const Learning = () => {
         </div>
       )}
     </div>
-    </div>
+    </>
   );
 };
 

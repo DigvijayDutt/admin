@@ -77,7 +77,7 @@ const UserManage = () => {
   };
 
   return (
-    <div className='cunt'>
+    <>
       <SideBar />
     <div className="user-management">
       {/* Navigation Bar */}
@@ -179,7 +179,7 @@ const UserManage = () => {
         </div>
       </div>
     </div>
-    </div>
+    </>
   );
 };
 
