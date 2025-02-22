@@ -16,8 +16,7 @@ table thead tr th{
 
 .header {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: row;
     border-bottom: 1px solid #ddd;
     padding: 20px 0;
     max-width: 100%;
@@ -26,6 +25,7 @@ table thead tr th{
 .header-title {
     font-size: 24px;
     font-weight: bold;
+    display: flex;
 }
 
 .user-menu {
@@ -39,6 +39,7 @@ table thead tr th{
     border: none;
     cursor: pointer;
     border-radius: 5px;
+    position: relative;
 }
 
 .menu {
