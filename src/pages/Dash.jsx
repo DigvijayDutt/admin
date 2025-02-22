@@ -4,6 +4,7 @@ import NavBar from '../assets/NavBar';
 import axios from 'axios'; // Import Axios for API requests
 import '../styles/dash.css';
 import SideBar from '../assets/SideBar';
+import { LineChart,PieChart } from '@mui/x-charts';
 
 function Dash() {
     const [anchorEl, setAnchorEl] = useState(null);
@@ -120,11 +121,32 @@ function Dash() {
                 <div className="charts">
                     <div className="chart">
                         <h4>User Activity</h4>
-                        <div className="pie-chart"></div> {/* Placeholder for PieChart */}
+                        <div className="pie-chart">
+                        <PieChart
+                            series={[
+                                {
+                                data: [
+                                    { id: 0, value: 10, label: 'series A' },
+                                    { id: 1, value: 15, label: 'series B' },
+                                    { id: 2, value: 20, label: 'series C' },
+                                ],
+                                },
+                            ]}
+                        />
+                        </div> {/* Placeholder for PieChart */}
                     </div>
                     <div className="chart">
                         <h4>Monthly Growth</h4>
-                        <div className="line-chart"></div> {/* Placeholder for LineChart */}
+                        <div className="line-chart">
+                        <LineChart
+                            xAxis={[{ data: [1, 2, 3, 5, 8, 10] }]}
+                            series={[
+                                {
+                                data: [2, 5.5, 2, 8.5, 1.5, 5],
+                                },
+                            ]}
+                            />
+                        </div> {/* Placeholder for LineChart */}
                     </div>
                 </div>
             </div>
