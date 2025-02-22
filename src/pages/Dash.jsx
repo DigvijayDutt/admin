@@ -97,7 +97,7 @@ function Dash() {
                 {/* User Management Table */}
                 <div className="data-table">
                     <h3>Recent User Registrations</h3>
-                    <table>
+                    <table className='dash-table'>
                         <thead>
                             <tr>
                                 <th>Name</th>

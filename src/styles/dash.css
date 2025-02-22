@@ -5,6 +5,9 @@ body {
     padding: 0;
     background-color: #f4f5f7;
 }
+table thead tr th{
+    color: #000;
+}
 /* Main Content Styling */
 .main-content {
     margin-left: 210px;
