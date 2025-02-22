@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import SideBar from "../assets/SideBar";
 import NavBar from '../assets/NavBar'
+import {Trash, PencilSimpleLine} from "@phosphor-icons/react";
 const Learning = () => {
   const [learningAreas, setLearningAreas] = useState([]);
   const [newLearningArea, setNewLearningArea] = useState("");
@@ -153,9 +154,9 @@ const Learning = () => {
                     {editingArea === area.learningid ? (
                       <button className="btn btn-save" onClick={() => handleSaveUpdate(area.learningid)}>Save</button>
                     ) : (
-                      <button className="btn btn-update" onClick={() => handleEdit(area)}>Edit</button>
+                      <button className="btn btn-update" onClick={() => handleEdit(area)}><PencilSimpleLine /></button>
                     )}
-                    <button className="btn btn-danger" onClick={() => handleDelete(area.learningid)}>Delete</button>
+                    <button className="btn btn-danger" onClick={() => handleDelete(area.learningid)}><Trash /></button>
                   </td>
                 </tr>
               ))

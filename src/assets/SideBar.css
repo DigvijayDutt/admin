@@ -5,6 +5,7 @@ Link{
 a{
     text-decoration: none;
     color: black;
+    padding: 0;
 }
 .sidebar {
     display: flex;

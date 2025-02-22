@@ -3,6 +3,7 @@ import axios from "axios";
 import SideBar from "../assets/SideBar";
 import NavBar from "../assets/NavBar";
 import "../styles/CourseManage.css";
+import * as Pi from "@phosphor-icons/react";
 
 function CourseManage() {
   const [courses, setCourses] = useState([]);
@@ -125,10 +126,13 @@ function CourseManage() {
   }
 
   return (
+    <>
+
     <div className="container">
       <SideBar />
+      <NavBar />
       <div className="course-manage">
-        <NavBar />
+  
 
         <header className="header">
           <h1>Welcome to Course Management</h1>
@@ -208,7 +212,7 @@ function CourseManage() {
                   <td>{Array.isArray(course.learning_areas) && course.learning_areas.length > 0
                           ? course.learning_areas.map(area => area.domainname || area.name).join(", ")
                           : "N/A"}</td>
-                  <td id="tbutton"><button className="delete-btn" onClick={() => deleteCourse(course.courseId || course.courseid)}>Delete</button></td>
+                  <td id="tbutton"><button className="delete-btn" onClick={() => deleteCourse(course.courseId || course.courseid)}><Pi.Trash /></button></td>
                 </tr>
               ))
             )}
@@ -216,6 +220,7 @@ function CourseManage() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 

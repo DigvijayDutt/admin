@@ -218,6 +218,7 @@ body {
 .user-actions .btn-edit {
   background-color: #ffc107;
   color: white;
+  margin:0 3px;
 }
 
 .user-actions .btn-edit:hover {
@@ -227,6 +228,7 @@ body {
 .user-actions .btn-delete {
   background-color: #95332c;
   color: white;
+  margin:0 3px;
 }
 
 .user-actions .btn-delete:hover {

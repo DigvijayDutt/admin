@@ -3,7 +3,7 @@ import axios from 'axios';
 import "../styles/UserManage.css";
 import SideBar from '../assets/SideBar';
 import NavBar from '../assets/NavBar';
-
+import {Trash, PencilSimpleLine} from "@phosphor-icons/react";
 
 const UserManage = () => {
   const [users, setUsers] = useState([]);
@@ -147,6 +147,7 @@ const UserManage = () => {
 
         <div className="user-list">
           <h2>User List</h2>
+          <div className='user-actions'>
           <table>
             <thead>
               <th>Name</th>
@@ -164,16 +165,17 @@ const UserManage = () => {
                   <td>{user.role}</td>
                   <td>
                     <button onClick={() => handleEdit(user)} className="btn-edit">
-                      Edit
+                      <PencilSimpleLine />
                     </button>
                     <button onClick={() => handleDelete(user.userid)} className="btn-delete">
-                      Delete
+                      <Trash />
                     </button>
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          </div>
         </div>
       </div>
     </div>
