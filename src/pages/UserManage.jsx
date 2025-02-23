@@ -83,7 +83,7 @@ const UserManage = () => {
       {/* Navigation Bar */}
       <NavBar />
       {/* Header */}
-      <header className="header">
+      <header className="UMheader">
         <h1>User Management</h1>
         <p>Manage your users efficiently</p>
       </header>

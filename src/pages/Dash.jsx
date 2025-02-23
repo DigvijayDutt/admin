@@ -62,7 +62,10 @@ function Dash() {
                 {/* Header */}
                 <NavBar />
                 <header className="header">
-                    <h1 className="header-title">Admin Dashboard</h1>
+                    <div className='header-left'>
+                        <h1 className="header-title">Admin Dashboard</h1>
+                    </div>
+                    <div className='header-right'>
                         <button onClick={handleMenu} className="account-btn">Account</button>
                         {anchorEl && (
                             <div className="menu">
@@ -70,6 +73,7 @@ function Dash() {
                                 <div onClick={handleClose}>Logout</div>
                             </div>
                         )}
+                    </div>
                 </header>
 
                 {/* Dashboard Summary */}

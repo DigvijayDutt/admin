@@ -17,9 +17,18 @@ table thead tr th{
 .header {
     display: flex;
     flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
     border-bottom: 1px solid #ddd;
     padding: 20px 0;
     max-width: 100%;
+}
+.header-left{
+    flex: 1;
+}
+.header-right{
+    display: flex;
+    align-items: center;
 }
 
 .header-title {

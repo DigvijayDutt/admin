@@ -54,20 +54,20 @@ body {
 }
 
 /* Header */
-.header {
+.UMheader {
   display: flex;
   flex-direction: column;
   text-align: center;
 }
 
-.header h1 {
+.UMheader h1 {
 
   font-size: 2.5rem;
   font-weight: 600;
   color: #333;
 }
 
-.header p {
+.UMheader p {
   font-size: 1.1rem;
   color: #777;
 }

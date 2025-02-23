@@ -81,17 +81,17 @@ body {
   }
   
   /* Header */
-  .header {
+  .CMheader {
     text-align: center;
     margin-bottom: 7px;
   }
   
-  .header h1 {
+  .CMheader h1 {
     font-size: 32px;
     margin-bottom: 10px;
   }
   
-  .header p {
+  .CMheader p {
     font-size: 16px;
     color: #666;
   }

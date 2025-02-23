@@ -134,7 +134,7 @@ function CourseManage() {
       <div className="course-manage">
   
 
-        <header className="header">
+        <header className="CMheader">
           <h1>Welcome to Course Management</h1>
           <p>Organize and manage your courses efficiently.</p>
         </header>
