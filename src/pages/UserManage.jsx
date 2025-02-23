@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import "../styles/UserManage.css";
 import SideBar from '../assets/SideBar';
-import NavBar from '../assets/NavBar';
+import NavBar from '../assets/Navbar';
 import {Trash, PencilSimpleLine} from "@phosphor-icons/react";
 
 const UserManage = () => {

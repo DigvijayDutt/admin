@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import SideBar from "../assets/SideBar";
-import NavBar from '../assets/NavBar'
+import NavBar from '../assets/Navbar'
 import {Trash, PencilSimpleLine} from "@phosphor-icons/react";
 import '../styles/learning.css';
 const Learning = () => {

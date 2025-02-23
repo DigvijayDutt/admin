@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import SideBar from "../assets/SideBar";
-import NavBar from "../assets/NavBar";
+import NavBar from "../assets/Navbar";
 import "../styles/CourseManage.css";
 import * as Pi from "@phosphor-icons/react";
 
