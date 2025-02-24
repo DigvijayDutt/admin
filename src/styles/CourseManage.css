@@ -72,14 +72,6 @@ body {
     font-weight: bold;
   }
   
-  .search-bar input {
-    padding: 8px;
-    border: 1px solid grey;
-    border-radius: 4px;
-    width: 200px;
-    margin-bottom: 7px;
-  }
-  
   /* Header */
   .CMheader {
     text-align: center;
@@ -230,10 +222,6 @@ body {
     .navbar {
       flex-direction: column;
       gap: 10px;
-    }
-  
-    .search-bar input {
-      width: 100%;
     }
   
     .add-course-form {
