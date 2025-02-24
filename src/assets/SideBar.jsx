@@ -10,6 +10,7 @@ function SideBar() {
                 <li><Link to="/coursemanage">Courses</Link></li>
                 <li><Link to="/learning">Domains</Link></li>
                 <li><Link to="/usermanage">Users</Link></li>
+                <li><Link to="/batchmanage">Batches</Link></li>
                 <li><Link to="">Reports</Link></li>
             </ul>
         </div>

@@ -1,0 +1,36 @@
+.BMcontainer{
+    display: flex;
+    flex-direction: column;
+    margin-left: 205px;
+}
+.BMform{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    max-width: 900px;
+    border: 1px solid rgba(128, 128, 128, 0.1);
+    border-radius: 5px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgba(231, 229, 229, 0.668);
+    padding: 1%;
+    margin-left: 28%;
+    margin-right: 28%;
+}
+
+.BMform input{
+    border: 1px solid rgb(148, 148, 148);
+    border-radius: 5px;
+    display: block;
+    max-width: 500px;
+    margin-top: 1%;
+    margin-bottom: 1%;
+}
+.BMform input[type=radio]{
+    display: inline;
+}
+
+.BMform h1{
+    margin-bottom: 0.5%;
+    align-self: flex-start;
+}
