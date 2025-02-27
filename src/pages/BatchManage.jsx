@@ -44,6 +44,16 @@ function BatchManage(){
                        <button type="submit">Add batch</button>
                     </form>
                 </div>
+                <div className="BMform">
+                    <h1>Search batches</h1>
+                    <form action="">
+                        <label htmlFor="coursename">Course Name: </label>
+                        <input type="text" name="coursename" />
+                        <label htmlFor="learningarea">Learning Areas: </label>
+                        <input type="text" name="learningarea" />
+                        <button type="submit">Search batch</button>
+                    </form>
+                </div>
                 <div className="BMtable">
                     <table>
                         <thead>
