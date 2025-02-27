@@ -51,3 +51,33 @@
 .BMform form{
     width: 100%;
 }
+
+.BMtable{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    width: fit-content;
+    border: 1px solid rgba(128, 128, 128, 0.1);
+    border-radius: 5px;
+    box-shadow: 2px 2px 8px rgba(0, 0, 0, 0.1);
+    background-color: rgba(231, 229, 229, 0.668);
+    padding: 1%;
+    margin: 2% auto;
+}
+
+table{
+    padding-top: 0;
+}
+
+@media (max-width: 600px){
+    .BMcontainer{
+        flex-direction: column;
+    }
+    .BMform{
+        flex-direction: column;
+    }
+    .BMtable{
+        flex-direction: column;
+    }
+}
