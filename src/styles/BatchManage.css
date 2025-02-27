@@ -34,3 +34,20 @@
     margin-bottom: 0.5%;
     align-self: flex-start;
 }
+
+.BMform button{
+    display: block;
+    margin: 0 auto;
+    padding: 4px;
+    border-radius: 10px;
+    border: 1px solid gray;
+}
+
+.BMform button:hover{
+    background-color: darkgray;
+    color: white;
+}
+
+.BMform form{
+    width: 100%;
+}

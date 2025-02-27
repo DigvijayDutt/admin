@@ -27,6 +27,7 @@ function BatchManage(){
                        <label htmlFor="active">Active</label>
                        <input type="radio" name="inactive" value="active"/>
                        <label htmlFor="inactive">In-Active</label>
+                       <button type="submit">Add batch</button>
                     </form>
                 </div>
             </div>
