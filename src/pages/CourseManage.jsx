@@ -138,16 +138,6 @@ function CourseManage() {
           <h1>Welcome to Course Management</h1>
           <p>Organize and manage your courses efficiently.</p>
         </header>
-
-        <div className="search-bar">
-          <label>Search: </label>
-          <input
-            type="text"
-            placeholder="Search courses..."
-            value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
-          />
-        </div>
 <hr className="line"></hr>
         <div className="add-course-form">
           <label>Add Course: </label>

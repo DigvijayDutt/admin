@@ -1,6 +1,6 @@
 import React from "react";
 import { Link } from 'react-router-dom';
-import "./Sidebar.css";
+import "./SideBar.css";
 import * as i from "@phosphor-icons/react";
 function SideBar() {
     return(
