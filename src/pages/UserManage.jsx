@@ -11,7 +11,7 @@ const UserManage = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [mobile, setMobile] = useState('');
-  const [role, setRole] = useState('');
+  // const [role, setRole] = useState('');
 
   // Fetch users from the backend
   useEffect(() => {
@@ -30,7 +30,7 @@ const UserManage = () => {
   // Handle form submission (create or update user)
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newUser = { name, email, phone: mobile, role };
+    const newUser = { name, email, phone: mobile};
 
     try {
       if (editingUser) {
@@ -54,7 +54,7 @@ const UserManage = () => {
     setName(user.name);
     setEmail(user.email);
     setMobile(user.phone);
-    setRole(user.role);
+    // setRole(user.role);
   };
 
   // Handle deleting a user
@@ -73,7 +73,7 @@ const UserManage = () => {
     setName('');
     setEmail('');
     setMobile('');
-    setRole('');
+    // setRole('');
   };
 
   return (
@@ -122,7 +122,7 @@ const UserManage = () => {
               required
             />
           </div>
-          <div className="form-group">
+          {/* <div className="form-group">
             <label>Role</label>
             <select
               value={role}
@@ -132,7 +132,7 @@ const UserManage = () => {
               <option value="student">Student</option>
               <option value="admin">Admin</option>
             </select>
-          </div>
+          </div> */}
           <div className="form-actions">
             <button type="submit" className="btn-primary">
               {editingUser ? 'Update' : 'Create'}
@@ -153,7 +153,7 @@ const UserManage = () => {
               <th>Name</th>
               <th>Email</th>
               <th>Phone</th>
-              <th>Role</th>
+              {/* <th>Role</th> */}
               <th>Actions</th>
             </thead>
             <tbody>
@@ -162,7 +162,7 @@ const UserManage = () => {
                   <td>{user.name}</td>
                   <td>{user.email}</td>
                   <td>{user.phone}</td>
-                  <td>{user.role}</td>
+                  {/* <td>{user.role}</td> */}
                   <td>
                     <button onClick={() => handleEdit(user)} className="btn-edit">
                       <PencilSimpleLine />

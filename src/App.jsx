@@ -23,7 +23,7 @@ function App() {
         <Route path="/dash" element={<Dash />} />
         <Route path="/learning" element={<Learning />} /> 
         <Route path="/editlearning" element={<EditLearningArea />} />
-        <Route path="/usermanage" element={<UserManage />} />
+        <Route path="/studentreg" element={<UserManage />} />
         <Route path="/coursemanage" element={<CourseManage />} />
         <Route path="/settings" element={<Settings />} />
         <Route path="/profile" element={<Profile />} />
