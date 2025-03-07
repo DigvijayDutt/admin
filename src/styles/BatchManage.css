@@ -67,6 +67,11 @@
     margin: 2% auto;
 }
 
+.BMform button{
+    background-color: rgb(73, 73, 73);
+    color: white;
+}
+
 table{
     padding-top: 0;
 }
