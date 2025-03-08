@@ -10,7 +10,10 @@ function NavBar(){
                     <li className='li'><Link to="/profile">Profile</Link></li>
                     <label htmlFor="search" className='li'>Search</label>
                 </ul>
-                <input type="text" name='search' className='navSearch' /> 
+                <form>
+                    <input type="text" name='search' className='navSearch' /> 
+                    <button type="submit">Search</button>
+                </form>
             </nav>
             <hr className='hr'/>
         </>

@@ -26,3 +26,15 @@
   background-position: 0px 0px;
   background-size: contain;
 }
+
+.NavBar form button{
+    background-color: rgb(82, 82, 82);
+    color: white;
+    border-radius: 5px;
+    padding: 2px;
+    border: 1px solid black;
+}
+.NavBar form button:hover{
+    background-color: white;
+    color: black;
+}
