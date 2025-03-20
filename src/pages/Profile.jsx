@@ -58,7 +58,7 @@ const Profile = () => {
         </label>
         <br />
         <div className="profile-settings-buttons">
-        <button type="submit">Update Profile</button>
+        <button type="submit" className="save-btn">Update Profile</button>
         </div>
       </form>
       </div>
