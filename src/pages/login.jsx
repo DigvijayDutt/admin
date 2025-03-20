@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../styles/login.css";
 import { useNavigate } from "react-router-dom";  // Import useNavigate for redirection
 import axios from 'axios';  // Import axios for making the HTTP request
+import ErrorPopup from '../assets/ErrorPopup';
 
 const Login = () => {
   const [email, setEmail] = useState("");
@@ -67,7 +68,7 @@ const Login = () => {
             Login
           </button>
         </form>
-        {error && <p className="login-error">{error}</p>} {/* Display error message */}
+        {error && <ErrorPopup />} {/* Display error message */}
       </div>
     </div>
   );
