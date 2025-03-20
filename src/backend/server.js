@@ -337,6 +337,56 @@ app.post('/courses', async (req, res) => {
   }
 });
 
+// Fetch user profile by ID
+app.get('/users/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const [rows] = await pool.query(
+      'SELECT userid, name, email, phone, role FROM users WHERE userid = ?',
+      [id]
+    );
+
+    if (rows.length === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json(rows[0]);
+  } catch (err) {
+    console.error("Error fetching user profile:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Update user profile
+app.put('/users/:id', async (req, res) => {
+  const { id } = req.params;
+  const { name, email, phone, role, password } = req.body;
+
+  try {
+    let query = 'UPDATE users SET name = ?, email = ?, phone = ?, role = ?, updated_at = NOW() WHERE userid = ?';
+    let values = [name, email, phone, role, id];
+
+    if (password) {
+      const hashedPassword = await bcrypt.hash(password, 10);
+      query = 'UPDATE users SET name = ?, email = ?, phone = ?, role = ?, password = ?, updated_at = NOW() WHERE userid = ?';
+      values = [name, email, phone, role, hashedPassword, id];
+    }
+
+    const [result] = await pool.query(query, values);
+
+    if (result.affectedRows === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    res.json({ message: "Profile updated successfully" });
+  } catch (err) {
+    console.error("Error updating profile:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+
 // Update the course deletion endpoint to handle learning area associations
 app.delete('/courses/:id', async (req, res) => {
   const { id } = req.params;

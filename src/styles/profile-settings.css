@@ -1,0 +1,97 @@
+/* General Styling */
+.profile-settings-container {
+    max-width: 800px;
+    margin: 40px auto;
+    padding: 20px;
+    background: #ffffff;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border-radius: 10px;
+}
+
+/* Page Title */
+.profile-settings-title {
+    font-size: 24px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 20px;
+    color: #333;
+}
+
+/* Form Styling */
+.profile-settings-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.profile-settings-form label {
+    font-size: 16px;
+    font-weight: 500;
+    color: #555;
+}
+
+.profile-settings-form input {
+    width: 100%;
+    padding: 10px;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    transition: border 0.3s ease-in-out;
+}
+
+.profile-settings-form input:focus {
+    border-color: #007bff;
+    outline: none;
+}
+
+/* Buttons */
+.profile-settings-buttons {
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+}
+
+.profile-settings-buttons button {
+    flex: 1;
+    padding: 12px;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.save-btn {
+    background-color: #28a745;
+    color: white;
+    margin-right: 10px;
+}
+
+.save-btn:hover {
+    background-color: #218838;
+}
+
+.cancel-btn {
+    background-color: #dc3545;
+    color: white;
+}
+
+.cancel-btn:hover {
+    background-color: #c82333;
+}
+
+/* Responsive Design */
+@media (max-width: 600px) {
+    .profile-settings-container {
+        padding: 15px;
+    }
+
+    .profile-settings-buttons {
+        flex-direction: column;
+    }
+
+    .save-btn, .cancel-btn {
+        margin: 5px 0;
+    }
+}

@@ -1,40 +1,122 @@
-.NavBar{
+/* NavBar.css */
+.navbar {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 0 2rem;
+    height: 64px;
     display: flex;
-    margin-top: 0.325%;
-    max-width: 100%;
-}
-.li{
-    list-style-type: none;
-    display: felx;
-    margin:2px 5px;
-    flex-direction: row-reverse;
-}
-.hr{
-    margin-bottom: 0.3%;
-}
-
-.navSearch{
-  box-sizing: border-box;
-  border: 1px solid #666;
-  border-radius: 5%;
-  padding: 2px;
-  margin: 2px;
-  margin-top: 5px;
-  margin-bottom: 5px;
-  background-image: url('magnifying-glass.svg');
-  background-repeat: no-repeat;
-  background-position: 0px 0px;
-  background-size: contain;
-}
-
-.NavBar form button{
-    background-color: rgb(82, 82, 82);
-    color: white;
-    border-radius: 5px;
-    padding: 2px;
-    border: 1px solid black;
-}
-.NavBar form button:hover{
-    background-color: white;
-    color: black;
-}
+    align-items: center;
+  }
+  
+  .nav-container {
+    max-width: 1400px;
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+  }
+  
+  .nav-brand .brand-link {
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: var(--primary);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+  
+  .nav-items {
+    display: flex;
+    align-items: center;
+    gap: 2rem;
+    flex-grow: 1;
+    justify-content: flex-end;
+  }
+  
+  .search-container {
+    position: relative;
+    max-width: 320px;
+    width: 100%;
+    min-width: 180px;
+  }
+  
+  .search-icon {
+    position: absolute;
+    left: 14px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-light);
+    pointer-events: none;
+  }
+  
+  .search-input {
+    width: 90%;
+    padding: 0.75rem 1rem 0.75rem 40px;
+    border: 1px solid var(--border);
+    border-radius: 0.75rem;
+    font-size: 0.9375rem;
+    background: var(--background);
+    color: var(--text);
+    transition: all 0.2s ease;
+  }
+  
+  .nav-links {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+    flex-shrink: 0;
+  }
+  
+  .nav-link {
+    color: var(--text-light);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 0.5rem;
+    white-space: nowrap;
+  }
+  
+  /* Responsive Fixes */
+  @media (max-width: 768px) {
+    .navbar {
+      padding: 0 1rem;
+      height: auto;
+      min-height: 56px;
+    }
+  
+    .nav-container {
+      flex-direction: column;
+      padding: 0.5rem 0;
+      gap: 0.75rem;
+    }
+  
+    .nav-items {
+      width: 100%;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 0.75rem;
+    }
+  
+    .search-container {
+      max-width: none;
+      order: 2;
+      flex-grow: 1;
+    }
+  
+    .nav-links {
+      order: 1;
+      gap: 1rem;
+      margin-right: auto;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .nav-links {
+      width: 100%;
+      justify-content: flex-start;
+    }
+  
+    .search-container {
+      min-width: 100%;
+    }
+  }

@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "../styles/profile-settings.css";
 
-const Settings = () => {
+const SettingsPage = () => {
   const userId = 1; // Replace with actual user ID
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -41,4 +40,4 @@ const Settings = () => {
   );
 };
 
-export default Settings;
+export default SettingsPage;

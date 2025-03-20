@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
-import "../styles/profile-settings.css";
+import ""
 
-const Profile = () => {
+const ProfilePage = () => {
   const userId = 1; // Replace with the actual user ID (can be dynamic)
   const [profile, setProfile] = useState({
     name: "",
@@ -60,4 +60,4 @@ const Profile = () => {
   );
 };
 
-export default Profile;
+export default ProfilePage;

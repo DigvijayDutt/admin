@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import SideBar from "../assets/SideBar";
-import NavBar from '../assets/Navbar'
-import {Trash, PencilSimpleLine} from "@phosphor-icons/react";
-import '../styles/learning.css';
+import NavBar from "../assets/Navbar";
+import { Trash, PencilSimpleLine } from "@phosphor-icons/react";
+import "../styles/learning.css";
+
 const Learning = () => {
   const [learningAreas, setLearningAreas] = useState([]);
   const [newLearningArea, setNewLearningArea] = useState("");
@@ -13,31 +14,26 @@ const Learning = () => {
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [areaToDelete, setAreaToDelete] = useState(null);
 
-  const API_URL = "http://localhost:5000/learning-areas"; // Base URL
-
-  // Fetch learning areas from backend
-  const fetchLearningAreas = async () => {
-    setLoading(true);
-    try {
-      const response = await fetch(API_URL);
-      if (!response.ok) throw new Error(`Failed to load data: ${response.statusText}`);
-      const data = await response.json();
-      console.log("Fetched learning areas:", data); // Debugging log
-      setLearningAreas(data);
-      setError("");
-    } catch (error) {
-      console.error("Error fetching learning areas:", error);
-      setError(`Failed to load data. ${error.message}`);
-    } finally {
-      setLoading(false);
-    }
-  };
+  const API_URL = "http://localhost:5000/learning-areas";
 
   useEffect(() => {
     fetchLearningAreas();
   }, []);
 
-  // Handle adding a new learning area
+  const fetchLearningAreas = async () => {
+    setLoading(true);
+    try {
+      const response = await fetch(API_URL);
+      if (!response.ok) throw new Error("Failed to fetch data");
+      const data = await response.json();
+      setLearningAreas(data);
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
+
   const handleAddLearningArea = async () => {
     if (!newLearningArea.trim()) return alert("Enter a valid learning area name.");
     try {
@@ -50,18 +46,15 @@ const Learning = () => {
       fetchLearningAreas();
       setNewLearningArea("");
     } catch (error) {
-      console.error("Error adding learning area:", error);
       alert("Error adding learning area.");
     }
   };
 
-  // Handle editing a learning area
   const handleEdit = (area) => {
-    setEditingArea(area.learningid); // Ensure ID is correctly referenced
+    setEditingArea(area.learningid);
     setUpdatedName(area.domainname);
   };
 
-  // Save the updated learning area
   const handleSaveUpdate = async (id) => {
     if (!updatedName.trim()) return alert("Enter a valid name.");
     try {
@@ -73,28 +66,25 @@ const Learning = () => {
       if (!response.ok) throw new Error("Failed to update learning area");
       fetchLearningAreas();
       setEditingArea(null);
-      setUpdatedName("");
     } catch (error) {
-      console.error("Error updating learning area:", error);
       alert("Error updating learning area.");
     }
   };
 
-  // Handle deleting a learning area (opens modal)
   const handleDelete = (id) => {
     setAreaToDelete(id);
     setShowDeleteModal(true);
   };
 
-  // Confirm the deletion of a learning area
   const handleConfirmDelete = async () => {
     try {
-      const response = await fetch(`${API_URL}/${areaToDelete}`, { method: "DELETE" });
+      const response = await fetch(`${API_URL}/${areaToDelete}`, { 
+        method: "DELETE" 
+      });
       if (!response.ok) throw new Error("Failed to delete learning area");
       fetchLearningAreas();
       setShowDeleteModal(false);
     } catch (error) {
-      console.error("Error deleting learning area:", error);
       alert("Error deleting learning area.");
     }
   };
@@ -102,83 +92,132 @@ const Learning = () => {
   return (
     <>
       <SideBar />
-    <div className="container">
-      <NavBar />
-      <h2 className="title">Learning Areas</h2>
+      <div className="learning-management">
+        <NavBar />
+        
+        <header className="LMheader">
+          <h1>Learning Areas Management</h1>
+          <p>Manage and organize your learning domains</p>
+        </header>
 
-      {/* Add New Learning Area */}
-      <div className="add-area">
-        <input
-          type="text"
-          className="add-input"
-          placeholder="Enter new learning area"
-          value={newLearningArea}
-          onChange={(e) => setNewLearningArea(e.target.value)}
-        />
-        <button className="btn btn-add" onClick={handleAddLearningArea}>Add</button>
-      </div>
-
-      {/* Loading & Error Messages */}
-      {loading ? (
-        <p className="loading">Loading...</p>
-      ) : error ? (
-        <p className="error">{error}</p>
-      ) : (
-        <table className="table">
-          <thead>
-            <tr>
-              <th>Name</th>
-              <th>Actions</th>
-            </tr>
-          </thead>
-          <tbody>
-            {learningAreas.length === 0 ? (
-              <tr>
-                <td colSpan="2" className="no-data">No learning areas available</td>
-              </tr>
-            ) : (
-              learningAreas.map((area) => (
-                <tr key={area.learningid}>
-                  <td>
-                    {editingArea === area.learningid ? (
-                      <input
-                        type="text"
-                        className="add-input"
-                        value={updatedName}
-                        onChange={(e) => setUpdatedName(e.target.value)}
-                      />
-                    ) : (
-                      area.domainname
-                    )}
-                  </td>
-                  <td>
-                    {editingArea === area.learningid ? (
-                      <button className="btn btn-save" onClick={() => handleSaveUpdate(area.learningid)}>Save</button>
-                    ) : (
-                      <button className="btn btn-update" onClick={() => handleEdit(area)}><PencilSimpleLine /></button>
-                    )}
-                    <button className="btn btn-danger" onClick={() => handleDelete(area.learningid)}><Trash /></button>
-                  </td>
-                </tr>
-              ))
-            )}
-          </tbody>
-        </table>
-      )}
-
-      {/* Delete Confirmation Modal */}
-      {showDeleteModal && (
-        <div className="modal-overlay">
-          <div className="modal">
-            <h3>Are you sure?</h3>
-            <div className="modal-actions">
-              <button className="btn btn-confirm" onClick={handleConfirmDelete}>Confirm</button>
-              <button className="btn btn-cancel" onClick={() => setShowDeleteModal(false)}>Cancel</button>
+        <div className="container">
+          <div className="learning-form">
+            <h2>{editingArea ? 'Edit Learning Area' : 'Create New Area'}</h2>
+            <div className="form-group">
+              <label>Domain Name</label>
+              <div className="input-group">
+                <input
+                  type="text"
+                  placeholder="Enter learning area name"
+                  value={editingArea ? updatedName : newLearningArea}
+                  onChange={(e) => 
+                    editingArea 
+                      ? setUpdatedName(e.target.value) 
+                      : setNewLearningArea(e.target.value)
+                  }
+                />
+                <button 
+                  className={`btn-primary ${editingArea ? 'btn-update' : ''}`}
+                  onClick={editingArea 
+                    ? () => handleSaveUpdate(editingArea) 
+                    : handleAddLearningArea
+                  }
+                >
+                  {editingArea ? 'Update' : 'Create'}
+                </button>
+              </div>
+              {editingArea && (
+                <button 
+                  className="btn-secondary" 
+                  onClick={() => {
+                    setEditingArea(null);
+                    setUpdatedName("");
+                  }}
+                >
+                  Cancel
+                </button>
+              )}
             </div>
           </div>
+
+          <div className="learning-list">
+            <h2>Learning Domains</h2>
+            
+            {loading ? (
+              <div className="skeleton-loader">
+                {[1, 2, 3].map((i) => (
+                  <div key={i} className="skeleton-row" />
+                ))}
+              </div>
+            ) : error ? (
+              <p className="error-message">{error}</p>
+            ) : (
+              <table>
+                <thead>
+                  <tr>
+                    <th>Domain Name</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {learningAreas.length === 0 ? (
+                    <tr>
+                      <td colSpan="2" className="no-data">
+                        No learning areas available
+                      </td>
+                    </tr>
+                  ) : (
+                    learningAreas.map((area) => (
+                      <tr key={area.learningid}>
+                        <td>{area.domainname}</td>
+                        <td>
+                          <div className="action-buttons">
+                            <button 
+                              className="btn-edit"
+                              onClick={() => handleEdit(area)}
+                            >
+                              <PencilSimpleLine size={18} />
+                            </button>
+                            <button
+                              className="btn-delete"
+                              onClick={() => handleDelete(area.learningid)}
+                            >
+                              <Trash size={18} />
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    ))
+                  )}
+                </tbody>
+              </table>
+            )}
+          </div>
         </div>
-      )}
-    </div>
+
+        {showDeleteModal && (
+          <div className="modal-overlay">
+            <div className="confirmation-modal">
+              <h3>Confirm Deletion</h3>
+              <p>Are you sure you want to delete this learning area?</p>
+              <div className="modal-actions">
+                <button 
+                  className="btn-delete" 
+                  onClick={handleConfirmDelete}
+                >
+                  Delete
+                </button>
+                <button 
+                  className="btn-secondary"
+                  onClick={() => setShowDeleteModal(false)}
+                >
+                  Cancel
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+      </div>
     </>
   );
 };
