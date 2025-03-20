@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import "../styles/profile-settings.css";
+import NavBar from '../assets/Navbar';
 
 const Profile = () => {
   const userId = 1; // Replace with the actual user ID (can be dynamic)
@@ -32,8 +33,10 @@ const Profile = () => {
 
   return (
     <div>
-      <h2>Profile</h2>
-      <form onSubmit={handleSubmit}>
+      <NavBar />
+      <h2 className="profile-settings-title">Profile</h2>
+      <div className="profile-settings-container">
+      <form onSubmit={handleSubmit} className="profile-settings-form">
         <label>
           Name:
           <input type="text" name="name" value={profile.name} onChange={handleChange} />
@@ -54,8 +57,11 @@ const Profile = () => {
           <input type="text" name="role" value={profile.role} onChange={handleChange} disabled />
         </label>
         <br />
+        <div className="profile-settings-buttons">
         <button type="submit">Update Profile</button>
+        </div>
       </form>
+      </div>
     </div>
   );
 };
