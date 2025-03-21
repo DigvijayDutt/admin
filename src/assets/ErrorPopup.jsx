@@ -14,7 +14,7 @@ const ErrorPopup = () => {
         An Error Occurred
       </Alert>
       <button onClick={() => setVisible(false)} className="text-white">
-        <X size={20} />
+        <X size={10} />
       </button>
     </div>
   );
