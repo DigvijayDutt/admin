@@ -1,0 +1,19 @@
+.x{
+    background: none;
+    border: none;
+    color: rgb(138, 2, 2);
+    position: absolute;
+    top: 12px;
+    right: 7px;
+}
+
+.alert{
+    display: flex;
+    flex-direction: row;
+    position: relative;
+    padding: 20px;
+}
+
+.Etitle{
+    text-align: left;
+}
