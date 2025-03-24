@@ -54,7 +54,7 @@ const ProfilePage = () => {
           <input type="text" name="role" value={profile.role} onChange={handleChange} disabled />
         </label>
         <br />
-        <button type="submit">Update Profile</button>
+        <button type="submit" className="save-btn">Update Profile</button>
       </form>
     </div>
   );

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import axios from "axios";
+import NavBar from "../assets/Navbar";
 
 const SettingsPage = () => {
   const userId = 1; // Replace with actual user ID
@@ -22,6 +23,7 @@ const SettingsPage = () => {
 
   return (
     <div>
+      <NavBar />
       <h2>Settings</h2>
       <form onSubmit={handleSubmit}>
         <label>

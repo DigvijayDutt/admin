@@ -7,7 +7,7 @@ function NavBar() {
     <nav className='navbar'>
       <div className='nav-container'>
         <div className='nav-brand'>
-          <Link to="/" className='brand-link'>Admin Panel</Link>
+          <Link to="/dash" className='brand-link'>Admin Panel</Link>
         </div>
         
         <div className='nav-items'>
