@@ -11,6 +11,8 @@ const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
+
+
 // MySQL connection pool
 const pool = mysql.createPool({
   host: process.env.DB_HOST,
@@ -414,6 +416,200 @@ app.delete('/courses/:id', async (req, res) => {
     res.status(500).json({ error: "Internal Server Error" });
   } finally {
     connection.release();
+  }
+});
+
+/** ==========================
+ * 🏫 Batch Management Routes (Optimized)
+ ========================== */
+
+// Get all batches with complete details
+app.get('/batches', async (req, res) => {
+  try {
+    const [batches] = await pool.query(`
+      SELECT 
+        b.batchid,
+        b.courseid,
+        c.title AS course_title,
+        c.description AS course_description,
+        b.start_at,
+        b.end_at,
+        b.Duration,
+        b.InstructorID,
+        i.name AS instructor_name,
+        i.email AS instructor_email,
+        b.NoOfSeats,
+        b.Status
+      FROM CourseBatches b
+      JOIN course c ON b.courseid = c.courseid
+      JOIN users i ON b.InstructorID = i.userid 
+        AND i.role = 'instructor'
+      ORDER BY b.start_at DESC
+    `);
+    
+    // Format dates
+    const formattedBatches = batches.map(batch => ({
+      ...batch,
+      start_at: new Date(batch.start_at).toISOString().split('T')[0],
+      end_at: new Date(batch.end_at).toISOString().split('T')[0]
+    }));
+
+    res.json(formattedBatches);
+  } catch (err) {
+    console.error("Error fetching batches:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Create new batch with validation
+app.post('/batches', async (req, res) => {
+  const { courseid, InstructorID, start_at, end_at, Duration, NoOfSeats, Status } = req.body;
+  
+  // Validation
+  if (!courseid || !InstructorID || !start_at || !end_at || !Duration || !NoOfSeats || !Status) {
+    return res.status(400).json({ error: "All fields are required" });
+  }
+
+  try {
+    // Verify course exists
+    const [course] = await pool.query('SELECT courseid FROM course WHERE courseid = ?', [courseid]);
+    if (course.length === 0) return res.status(400).json({ error: "Invalid course ID" });
+
+    // Verify instructor exists in users table
+    const [instructor] = await pool.query(
+      'SELECT userid FROM users WHERE userid = ? AND role = "instructor"',
+      [InstructorID]
+    );
+    if (instructor.length === 0) return res.status(400).json({ error: "Invalid instructor ID" });
+
+    // Create batch
+    const [result] = await pool.query(
+      `INSERT INTO CourseBatches 
+      (courseid, InstructorID, start_at, end_at, Duration, NoOfSeats, Status)
+      VALUES (?, ?, ?, ?, ?, ?, ?)`,
+      [courseid, InstructorID, start_at, end_at, Duration, NoOfSeats, Status]
+    );
+
+    // Get created batch with joins
+    const [newBatch] = await pool.query(`
+      SELECT 
+        b.batchid,
+        c.title AS course_title,
+        i.name AS instructor_name,
+        b.start_at,
+        b.end_at,
+        b.Duration,
+        b.NoOfSeats,
+        b.Status
+      FROM CourseBatches b
+      JOIN course c ON b.courseid = c.courseid
+      JOIN users i ON b.InstructorID = i.userid
+      WHERE b.batchid = ?
+    `, [result.insertId]);
+
+    res.status(201).json({
+      ...newBatch[0],
+      start_at: new Date(newBatch[0].start_at).toISOString().split('T')[0],
+      end_at: new Date(newBatch[0].end_at).toISOString().split('T')[0]
+    });
+  } catch (error) {
+    console.error("Error creating batch:", error);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Update batch with full validation
+app.put('/batches/:id', async (req, res) => {
+  const { id } = req.params;
+  const { courseid, InstructorID, start_at, end_at, Duration, NoOfSeats, Status } = req.body;
+
+  try {
+    // Verify batch exists
+    const [existingBatch] = await pool.query('SELECT batchid FROM CourseBatches WHERE batchid = ?', [id]);
+    if (existingBatch.length === 0) return res.status(404).json({ error: "Batch not found" });
+
+    // Verify course exists if being updated
+    if (courseid) {
+      const [course] = await pool.query('SELECT courseid FROM course WHERE courseid = ?', [courseid]);
+      if (course.length === 0) return res.status(400).json({ error: "Invalid course ID" });
+    }
+
+    // Verify instructor exists in users table if being updated
+    if (InstructorID) {
+      const [instructor] = await pool.query(
+        'SELECT userid FROM users WHERE userid = ? AND role = "instructor"',
+        [InstructorID]
+      );
+      if (instructor.length === 0) return res.status(400).json({ error: "Invalid instructor ID" });
+    }
+
+    // Update batch
+    const [result] = await pool.query(
+      `UPDATE CourseBatches 
+      SET courseid = ?, InstructorID = ?, start_at = ?, end_at = ?, 
+          Duration = ?, NoOfSeats = ?, Status = ?
+      WHERE batchid = ?`,
+      [courseid, InstructorID, start_at, end_at, Duration, NoOfSeats, Status, id]
+    );
+
+    // Get updated batch with joins
+    const [updatedBatch] = await pool.query(`
+      SELECT 
+        b.batchid,
+        c.title AS course_title,
+        i.name AS instructor_name,
+        b.start_at,
+        b.end_at,
+        b.Duration,
+        b.NoOfSeats,
+        b.Status
+      FROM CourseBatches b
+      JOIN course c ON b.courseid = c.courseid
+      JOIN users i ON b.InstructorID = i.userid
+      WHERE b.batchid = ?
+    `, [id]);
+
+    res.json({
+      ...updatedBatch[0],
+      start_at: new Date(updatedBatch[0].start_at).toISOString().split('T')[0],
+      end_at: new Date(updatedBatch[0].end_at).toISOString().split('T')[0]
+    });
+  } catch (err) {
+    console.error("Error updating batch:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+
+// Get all instructors from users table
+app.get('/instructors', async (req, res) => {
+  try {
+    const [rows] = await pool.query(
+      `SELECT 
+        userid AS instructor_id, 
+        name, 
+        email, 
+        phone 
+       FROM users 
+       WHERE role = 'instructor'`
+    );
+    res.json(rows);
+  } catch (err) {
+    console.error("Error fetching instructors:", err);
+    res.status(500).json({ error: "Internal Server Error" });
+  }
+});
+// Add this to your backend routes
+app.delete('/batches/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+      const [result] = await pool.query('DELETE FROM CourseBatches WHERE batchid = ?', [id]);
+      if (result.affectedRows === 0) {
+          return res.status(404).json({ error: "Batch not found" });
+      }
+      res.status(204).send();
+  } catch (err) {
+      console.error("Error deleting batch:", err);
+      res.status(500).json({ error: "Internal Server Error" });
   }
 });
 
