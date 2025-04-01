@@ -613,5 +613,82 @@ app.delete('/batches/:id', async (req, res) => {
   }
 });
 
+// In your server.js (backend)
+// FAQ CRUD Endpoints
+
+// Get all FAQs
+app.get('/faqs', async (req, res) => {
+  try {
+    const [faqs] = await pool.query('SELECT * FROM faqs');
+    res.json(faqs);
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Server error' });
+  }
+});
+
+// Create new FAQ
+app.post('/faqs', async (req, res) => {
+  const { question, answer, category } = req.body;
+  
+  try {
+    const [result] = await pool.query(
+      'INSERT INTO faqs (question, answer, category) VALUES (?, ?, ?)',
+      [question, answer, category]
+    );
+    
+    const [newFAQ] = await pool.query('SELECT * FROM faqs WHERE id = ?', [result.insertId]);
+    res.status(201).json(newFAQ[0]);
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error creating FAQ' });
+  }
+});
+
+// Update FAQ
+app.put('/faqs/:id', async (req, res) => {
+  const { id } = req.params;
+  const { question, answer, category } = req.body;
+
+  try {
+    const [existing] = await pool.query('SELECT * FROM faqs WHERE id = ?', [id]);
+    if (existing.length === 0) {
+      return res.status(404).json({ message: 'FAQ not found' });
+    }
+
+    await pool.query(
+      'UPDATE faqs SET question = ?, answer = ?, category = ? WHERE id = ?',
+      [question, answer, category, id]
+    );
+
+    const [updatedFAQ] = await pool.query('SELECT * FROM faqs WHERE id = ?', [id]);
+    res.json(updatedFAQ[0]);
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error updating FAQ' });
+  }
+});
+
+// Delete FAQ
+app.delete('/faqs/:id', async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const [existing] = await pool.query('SELECT * FROM faqs WHERE id = ?', [id]);
+    if (existing.length === 0) {
+      return res.status(404).json({ message: 'FAQ not found' });
+    }
+
+    await pool.query('DELETE FROM faqs WHERE id = ?', [id]);
+    res.json({ message: 'FAQ deleted successfully' });
+    
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: 'Error deleting FAQ' });
+  }
+});
+
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));

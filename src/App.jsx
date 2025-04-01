@@ -14,6 +14,7 @@ import EditLearningArea from './pages/EditLearningArea';
 import Settings from './pages/Settings';
 import Profile from './pages/Profile';
 import BatchManage from './pages/BatchManage';
+import FAQManage from './pages/faq';
 import './App.css';
 
 function App() {
@@ -29,6 +30,7 @@ function App() {
         <Route path="/settings" element={<Settings />} />
         <Route path="/profile" element={<Profile />} />
         <Route path="/batchmanage" element={<BatchManage />} />
+        <Route path="/faq" element={<FAQManage />} />
       </Routes>
     </Router>
   );
